@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import {
   Button,
   Grid,
@@ -12,12 +12,29 @@ import {
 } from "@material-ui/core";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import CryptoAES from "crypto-js/aes";
+import Base64 from "crypto-js/enc-base64";
+import CryptoENC from "crypto-js/enc-utf8";
+import sha256 from "crypto-js/sha256";
 import { green } from "@material-ui/core/colors";
 
 const LoginPage = (props) => {
+  useLayoutEffect(() => {
+    fetch(process.env.REACT_APP_BACKEND_IP + "/getNonce")
+      .then((r) => r.json())
+      .then((data) => {
+        setValues({
+          nonce: data,
+        });
+      });
+  }, []);
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
+  const [values, setValues] = useState({
+    nonce: "",
+  });
 
   return (
     <div>
@@ -63,6 +80,23 @@ const LoginPage = (props) => {
                 onChange={(event) => setPassword(event.target.value)}
               />
             </FormControl>
+          </Grid>
+
+          <Grid item>
+            <Button
+              onClick={() => {
+                // var ciphertext = CryptoAES.encrypt(username, values.nonce);
+                // var _ciphertext = CryptoAES.decrypt(
+                //   ciphertext.toString(),
+                //   values.nonce
+                // );
+                // console.log(_ciphertext.toString(CryptoENC));
+                var hashedPassword = sha256(password, values.nonce);
+                console.log(hashedPassword.toString());
+              }}
+            >
+              Submit
+            </Button>
           </Grid>
         </Grid>
       </div>
