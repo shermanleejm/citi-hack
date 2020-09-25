@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@material-ui/core";
 
-function RegisterPage = ({props}) {
+const RegisterPage = props => {
   return (
     <div>
       This is register page

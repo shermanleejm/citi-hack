@@ -11,6 +11,7 @@ function App() {
   useEffect(() => {
 
   })
+
   const [authenticated, setAthenticated] = useState(false);
   const [pageToShow, setPageToShow] = useState(0);
   function authenticate() {
@@ -21,7 +22,7 @@ function App() {
     switch (pageToShow) {
       // Register page
       case 0:
-        return <RegisterPage pageToShow={setPageToShow} />;
+        return <RegisterPage setPageToShow={setPageToShow} />;
         
       case 1:
         return <HomePage />
