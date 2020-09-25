@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-function HomePage() {
+const HomePage = props => {
   return <div>This is home page</div>;
 }
 
