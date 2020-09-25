@@ -7,13 +7,14 @@ import RegisterPage from "./components/RegisterPage";
 import HomePage from "./components/HomePage";
 import "./App.css";
 import LoginPage from "./components/LoginPage";
+import { useCookies } from "react-cookie";
 
 function App() {
   useEffect(() => {});
 
   const [authenticated, setAthenticated] = useState(false);
   const [pageToShow, setPageToShow] = useState(0);
-  function authenticate() {}
+  const [cookie, setCookie] = useCookies(["authenticated", "pageToShow"]);
 
   function showPage() {
     switch (pageToShow) {
@@ -22,14 +23,10 @@ function App() {
         return <LoginPage setPageToShow={setPageToShow} />;
 
       case 1:
-        return (
-          <RegisterPage
-            setPageToShow={setPageToShow}
-            setAthenticated={setAthenticated}
-          />
-        );
-      
+        return <RegisterPage setPageToShow={setPageToShow} />;
+
       case 2:
+        return <HomePage setPageToShow={setPageToShow} />;
         break;
 
       default:
@@ -47,9 +44,21 @@ function App() {
           <Typography variant="h6" style={{ flexGrow: 1 }}>
             SuperSecureBank
           </Typography>
-          <Button color="inherit" onClick={() => setPageToShow(1)}>
-            Login
-          </Button>
+          {cookie.authenticated === "true" ? (
+            <Button
+              color="inherit"
+              onClick={() => {
+                setCookie("authenticated", "false", { expires: 0 });
+                setPageToShow(0);
+              }}
+            >
+              logout
+            </Button>
+          ) : (
+            <Button color="inherit" onClick={() => setPageToShow(0)}>
+              Login
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
 
