@@ -1,9 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { Button, Grid, TextField, Typography } from "@material-ui/core";
+import {
+  Button,
+  Grid,
+  TextField,
+  Typography,
+  InputAdornment,
+  IconButton,
+  Input,
+  InputLabel,
+  FormControl,
+} from "@material-ui/core";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import { green } from "@material-ui/core/colors";
 
 const LoginPage = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(true);
 
   return (
     <div>
@@ -24,7 +38,7 @@ const LoginPage = (props) => {
           </Grid>
           <Grid item>
             <TextField
-              error={true}
+              error={false}
               label="Username"
               fullWidth
               onChange={(event) => setUsername(event.target.value)}
@@ -32,12 +46,23 @@ const LoginPage = (props) => {
           </Grid>
 
           <Grid item>
-            <TextField
-              error={true}
-              label="Password"
-              fullWidth
-              onChange={(event) => setPassword(event.target.value)}
-            />
+            <FormControl fullWidth>
+              <InputLabel>Password</InputLabel>
+              <Input
+                error={false}
+                label="Password"
+                fullWidth
+                type={showPassword ? "text" : "password"}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton onClick={() => setShowPassword(!showPassword)}>
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                onChange={(event) => setPassword(event.target.value)}
+              />
+            </FormControl>
           </Grid>
         </Grid>
       </div>
