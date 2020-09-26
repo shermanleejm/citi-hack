@@ -1,23 +1,108 @@
 {
   "admin": {
     "accounts": [
-      { "id": "403123456", "name": "SuperSaver", "amount": 6000 },
-      { "id": "209374021", "name": "Regular Saver", "amount": 42 }
+      {
+        "id": "403123456",
+        "name": "SuperSaver",
+        "amount": 591400
+      },
+      {
+        "id": "209374021",
+        "name": "Regular Saver",
+        "amount": 42
+      }
     ],
-    "stocks": { "AAPL": 4000, "TSLA": 6969, "AMZN": 420 },
+    "stocks": {
+      "AAPL": 4000,
+      "TSLA": 6969,
+      "AMZN": 420
+    },
     "averageTransfer": 50,
     "numOfTransfers": 35,
     "previousLocations": [
-      { "compound_code": "8QXC+9W Singapore", "latlng": "1.348429,103.772371" }
+      {
+        "compound_code": "8QXC+9W Singapore",
+        "latlng": "1.348429,103.772371"
+      }
+    ],
+    "contacts": [
+      "mother",
+      "father"
+    ]
+  },
+  "mother": {
+    "accounts": [
+      {
+        "id": "403123456",
+        "name": "SuperSaver",
+        "amount": 10000
+      }
+    ],
+    "stocks": {
+      "AAPL": 4000,
+      "TSLA": 6969,
+      "AMZN": 420
+    },
+    "averageTransfer": 50,
+    "numOfTransfers": 35,
+    "previousLocations": [
+      {
+        "compound_code": "8QXC+9W Singapore",
+        "latlng": "1.348429,103.772371"
+      }
+    ],
+    "contacts": [
+      "admin",
+      "father"
+    ]
+  },
+  "father": {
+    "accounts": [
+      {
+        "id": "403123456",
+        "name": "SuperSaver",
+        "amount": 10000
+      }
+    ],
+    "stocks": {
+      "AAPL": 4000,
+      "TSLA": 6969,
+      "AMZN": 420
+    },
+    "averageTransfer": 50,
+    "numOfTransfers": 35,
+    "previousLocations": [
+      {
+        "compound_code": "8QXC+9W Singapore",
+        "latlng": "1.348429,103.772371"
+      }
+    ],
+    "contacts": [
+      "admin",
+      "mother"
     ]
   },
   "admin1": {
-    "accounts": [{ "id": 57264246, "name": "SuperSaver", "amount": 50 }],
-    "stocks": { "AAPL": 0, "TSLA": 0, "AMZN": 0 },
+    "accounts": [
+      {
+        "id": 57264246,
+        "name": "SuperSaver",
+        "amount": 50
+      }
+    ],
+    "stocks": {
+      "AAPL": 0,
+      "TSLA": 0,
+      "AMZN": 0
+    },
     "averageTransfer": 0,
     "numOfTransfers": 0,
     "previousLocations": [
-      { "compound_code": "8QXC+9W Singapore", "latlng": "1.348429,103.772371" }
-    ]
+      {
+        "compound_code": "8QXC+9W Singapore",
+        "latlng": "1.348429,103.772371"
+      }
+    ],
+    "contacts": []
   }
 }

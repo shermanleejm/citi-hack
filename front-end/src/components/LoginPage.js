@@ -134,12 +134,6 @@ const LoginPage = (props) => {
               <Button
                 type="submit"
                 onClick={(event) => {
-                  // var ciphertext = CryptoAES.encrypt(username, values.nonce);
-                  // var _ciphertext = CryptoAES.decrypt(
-                  //   ciphertext.toString(),
-                  //   values.nonce
-                  // );
-                  // console.log(_ciphertext.toString(CryptoENC));
                   event.preventDefault();
                   var hashedPassword = sha256(password, values.nonce);
                   axios(

@@ -52,6 +52,7 @@ def register():
             "previousLocations": [
                 {"compound_code": getCountry(location)[1], "latlng": location}
             ],
+            "contacts": [],
         }
 
         with open("SuperSecureUserData.json", "w+") as fp:
@@ -79,6 +80,41 @@ def getUserData():
     data = json.load(open("SuperSecureUserData.json"))
 
     return json.dumps(data.get(username, "Error"))
+
+
+@app.route("/transfer", methods=["GET"])
+def transfer():
+    username = request.args.get("username", None)
+    password = request.args.get("password", None)
+    accountID = request.args.get("accountid", None)
+    payee = request.args.get("payee", None)
+    amount = request.args.get("amount", None)
+
+    db = json.load(open("SuperSecureDatabase.json", "r"))
+    userData = json.load(open("SuperSecureUserData.json"))
+
+    if db.get(username, None) == password:
+        for account in userData[username]["accounts"]:
+            if account["id"] == accountID:
+                if account["amount"] < int(amount):
+                    return "insufficient cash"
+                account["amount"] -= int(amount)
+
+                newAverage = (
+                    userData[username]["averageTransfer"]
+                    * userData[username]["numOfTransfers"]
+                    + amount
+                ) / (userData[username]["numOfTransfers"] + 1)
+
+                userData[username]["averageTransfer"] = newAverage
+                userData[username]["numOfTransfers"] += 1
+
+                with open("SuperSecureUserData.json", "w+") as fp:
+                    json.dump(userData, fp, indent=2)
+
+                return "Success"
+    else:
+        return "error"
 
 
 def getCountry(latlng=""):

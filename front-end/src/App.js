@@ -7,6 +7,7 @@ import RegisterPage from "./components/RegisterPage";
 import HomePage from "./components/HomePage";
 import "./App.css";
 import LoginPage from "./components/LoginPage";
+import Transfer from "./components/Transfer";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 
@@ -36,6 +37,15 @@ function App() {
         return <HomePage setPageToShow={setPageToShow} />;
         break;
 
+      case 3:
+        return <Transfer setPageToShow={setPageToShow} nonce={values.nonce} />;
+
+      case 4:
+        break;
+
+      case 5:
+        break;
+
       default:
         break;
     }
@@ -48,7 +58,13 @@ function App() {
           <IconButton edge="start" color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" style={{ flexGrow: 1 }}>
+          <Typography
+            variant="h6"
+            style={{ flexGrow: 1, cursor: "pointer" }}
+            onClick={() => {
+              setPageToShow(2);
+            }}
+          >
             SuperSecureBank
           </Typography>
           {cookie.authenticated === "true" ? (

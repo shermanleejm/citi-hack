@@ -53,18 +53,20 @@ const HomePage = (props) => {
           alignItems="center"
         >
           <Grid item md={4} sm={4} lg={4}>
-            <Button>Transfer</Button>
+            <Button onClick={() => props.setPageToShow(3)}>Transfer</Button>
           </Grid>
           <Grid item md={4} sm={4} lg={4}>
-            <Button>Stocks</Button>
+            <Button onClick={() => props.setPageToShow(4)}>Stocks</Button>
           </Grid>
           <Grid item md={4} sm={4} lg={4}>
-            <Button>PayLater</Button>
+            <Button onClick={() => props.setPageToShow(5)}>CREDIT CARD</Button>
           </Grid>
         </Grid>
       </div>
     );
   }
+
+  
 
   function displayHistory() {
     return (
