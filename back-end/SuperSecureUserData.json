@@ -4,7 +4,7 @@
       {
         "id": "403123456",
         "name": "SuperSaver",
-        "amount": 591400
+        "amount": 531370
       },
       {
         "id": "209374021",
@@ -17,8 +17,8 @@
       "TSLA": 6969,
       "AMZN": 420
     },
-    "averageTransfer": 50,
-    "numOfTransfers": 35,
+    "averageTransfer": 1669.7297297297298,
+    "numOfTransfers": 37,
     "previousLocations": [
       {
         "compound_code": "8QXC+9W Singapore",

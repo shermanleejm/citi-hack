@@ -143,9 +143,31 @@ function Transfer(props) {
               <Grid item>
                 <Button
                   type="submit"
-                  onClick={() => {
+                  onClick={(event) => {
                     if (amount > 1.1 * userData.averageTransfer) {
                       toggle2FA(true);
+                    } else {
+                      var hashedPassword = sha256(password, props.nonce);
+                      axios(
+                        process.env.REACT_APP_BACKEND_IP +
+                        "/easytransfer?username=" +
+                        username +
+                        "&password=" +
+                        hashedPassword +
+                        "&accountid=" +
+                        account +
+                        "&payee=" +
+                        payee +
+                        "&amount=" +
+                        amount
+                      ).then((response) => {
+                        console.log(response);
+                        if (response["data"] == "Success") {
+                          window.location.reload(false);
+                        } else {
+                          alert("error verifying 2FA");
+                        };
+                      });
                     }
                   }}
                 >

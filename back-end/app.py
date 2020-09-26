@@ -103,7 +103,7 @@ def transfer():
                 newAverage = (
                     userData[username]["averageTransfer"]
                     * userData[username]["numOfTransfers"]
-                    + amount
+                    + int(amount)
                 ) / (userData[username]["numOfTransfers"] + 1)
 
                 userData[username]["averageTransfer"] = newAverage
@@ -115,6 +115,38 @@ def transfer():
                 return "Success"
     else:
         return "error"
+
+@app.route("/easytransfer", methods=["GET"])
+def easttransfer():
+    username = request.args.get("username", None)
+    accountID = request.args.get("accountid", None)
+    payee = request.args.get("payee", None)
+    amount = request.args.get("amount", None)
+
+    db = json.load(open("SuperSecureDatabase.json", "r"))
+    userData = json.load(open("SuperSecureUserData.json"))
+
+
+    for account in userData[username]["accounts"]:
+        if account["id"] == accountID:
+            if account["amount"] < int(amount):
+                return "insufficient cash"
+            account["amount"] -= int(amount)
+
+            newAverage = (
+                userData[username]["averageTransfer"]
+                * userData[username]["numOfTransfers"]
+                + int(amount)
+            ) / (userData[username]["numOfTransfers"] + 1)
+
+            userData[username]["averageTransfer"] = newAverage
+            userData[username]["numOfTransfers"] += 1
+
+            with open("SuperSecureUserData.json", "w+") as fp:
+                json.dump(userData, fp, indent=2)
+
+            return "Success"
+
 
 
 def getCountry(latlng=""):
