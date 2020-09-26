@@ -7,20 +7,27 @@ import RegisterPage from "./components/RegisterPage";
 import HomePage from "./components/HomePage";
 import "./App.css";
 import LoginPage from "./components/LoginPage";
+import axios from "axios";
 import { useCookies } from "react-cookie";
 
 function App() {
-  useEffect(() => {});
-
   const [authenticated, setAthenticated] = useState(false);
   const [pageToShow, setPageToShow] = useState(0);
   const [cookie, setCookie] = useCookies(["authenticated", "pageToShow"]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [values, setValues] = useState({
+    nonce: "",
+  });
 
   function showPage() {
     switch (pageToShow) {
       // Register page
       case 0:
-        return <LoginPage setPageToShow={setPageToShow} />;
+        return cookie["authenticated"] !== "true" ? (
+          <LoginPage setPageToShow={setPageToShow} nonce={values.nonce} />
+        ) : (
+          <HomePage setPageToShow={setPageToShow} />
+        );
 
       case 1:
         return <RegisterPage setPageToShow={setPageToShow} />;

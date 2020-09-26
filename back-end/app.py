@@ -10,7 +10,7 @@ CORS(app)
 
 @app.route("/getNonce", methods=["GET"])
 def getNonce():
-    return jsonify("SuperSecureSalt" + str(datetime.datetime.today().weekday()))
+    return jsonify("SuperSecureSalt")
 
 
 @app.route("/login", methods=["GET"])
@@ -31,13 +31,28 @@ def login():
 def register():
     username = request.args.get("username", None)
     password = request.args.get("password", None)
+    location = request.args.get("location", "1.348429,103.772371")
 
     db = json.load(open("SuperSecureDatabase.json", "r"))
+    userData = json.load(open("SuperSecureUserData.json"))
 
     if username != None and password != None and db.get(username, None) == None:
         db[username] = password
         with open("SuperSecureDatabase.json", "w+") as fp:
             json.dump(db, fp, indent=2)
+
+        userData[username] = {
+            "accounts": [
+                {"id": "403123456", "name": "SuperSaver", "amount": 6000},
+                {"id": "209374021", "name": "Regular Saver", "amount": 42},
+            ],
+            "stocks": {"AAPL": "4000", "TSLA": "6969", "AMZN": "420"},
+            "averageTransfer": 50,
+            "numOfTransfers": 35,
+            "previousLocations": [
+                {"compound_code": "8QXC+9W Singapore", "latlng": "1.348429,103.772371"}
+            ],
+        }
 
         return jsonify("Success", 200)
 
@@ -60,7 +75,7 @@ def getUserData():
 
     data = json.load(open("SuperSecureUserData.json"))
 
-    return data.get(username, "Error")
+    return json.dumps(data.get(username, "Error"))
 
 
 def getCountry(latlng=""):

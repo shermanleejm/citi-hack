@@ -141,12 +141,26 @@ const RegisterPage = (props) => {
                   values.password === values.confirmPassword
                 ) {
                   var hashedPassword = sha256(values.password, values.nonce);
+                  let lat = "";
+                  let lng = "";
+
+                  navigator.geolocation.getCurrentPosition(function (
+                    postition
+                  ) {
+                    lat = postition.coords.latitude;
+                    lng = postition.coords.longitude;
+                  });
+
                   fetch(
                     process.env.REACT_APP_BACKEND_IP +
                       "/register?username=" +
                       values.username +
                       "&password=" +
-                      hashedPassword
+                      hashedPassword +
+                      "&latlng=" +
+                      lat +
+                      "," +
+                      lng
                   )
                     .then((r) => r.json())
                     .then((data) => {
@@ -154,6 +168,7 @@ const RegisterPage = (props) => {
                       if (data[0] == "Success") {
                         setCookies("authenticated", "true", { expires: 0 });
                         setCookies("username", values.username, { expires: 0 });
+                        alert("Success!")
                         props.setPageToShow(2);
                       } else {
                         alert(

@@ -18,31 +18,34 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { Cookies, useCookies } from "react-cookie";
 import sha256 from "crypto-js/sha256";
 import { green } from "@material-ui/core/colors";
+import axios from "axios";
 
 const LoginPage = (props) => {
-  useLayoutEffect(() => {
-    if (cookies.authenticated == "true") {
-      props.setPageToShow(2);
-    }
-
-    fetch(process.env.REACT_APP_BACKEND_IP + "/getNonce")
-      .then((r) => r.json())
-      .then((data) => {
-        setValues({
-          nonce: data,
-        });
-      });
-  }, []);
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [values, setValues] = useState({
-    nonce: "",
+    nonce: props.nonce,
     status: "",
   });
   const [modalState, toggleModalState] = useState(false);
   const [cookies, setCookies] = useCookies(["authenticated", "username"]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+
+      const result = await axios(
+        process.env.REACT_APP_BACKEND_IP + "/getNonce"
+      );
+
+      setValues({ nonce: result.data });
+      setIsLoading(false);
+    };
+
+    fetchData();
+  }, []);
 
   const printModal = (
     <div>
@@ -82,8 +85,6 @@ const LoginPage = (props) => {
 
   return (
     <div>
-      {printModal}
-
       <div style={{ width: "60%", margin: "auto", paddingTop: "32px" }}>
         <form>
           <Grid
@@ -141,22 +142,28 @@ const LoginPage = (props) => {
                   // console.log(_ciphertext.toString(CryptoENC));
                   event.preventDefault();
                   var hashedPassword = sha256(password, values.nonce);
-                  fetch(
+                  axios(
                     process.env.REACT_APP_BACKEND_IP +
                       "/login?username=" +
                       username +
                       "&password=" +
                       hashedPassword
-                  )
-                    .then((r) => r.json())
-                    .then((data) => {
-                      if (data[0] == "Success") {
-                        setCookies("authenticated", "true", { expires: 0 });
-                        setCookies("username", username, { expires: 0 });
-                      }
+                  ).then((response) => {
+                    console.log(response["data"][0]);
+                    setValues({ status: response["data"][0] });
+                    if (response["data"][0] == "Success") {
+                      setCookies("authenticated", "true", {
+                        expires: 0,
+                      });
+                      setCookies("username", username, {
+                        expires: 0,
+                      });
                       toggleModalState(true);
-                      setValues({ status: data[0] });
-                    });
+                      props.setPageToShow(2);
+                    } else {
+                      alert("error logging in" + values.status);
+                    }
+                  });
                 }}
               >
                 Submit
