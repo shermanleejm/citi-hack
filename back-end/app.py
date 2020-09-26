@@ -3,6 +3,7 @@ from flask_cors import CORS
 import json
 import datetime
 import requests
+import random
 
 app = Flask(__name__)
 CORS(app)
@@ -43,16 +44,18 @@ def register():
 
         userData[username] = {
             "accounts": [
-                {"id": "403123456", "name": "SuperSaver", "amount": 6000},
-                {"id": "209374021", "name": "Regular Saver", "amount": 42},
+                {"id": random.randint(0, 99999999), "name": "SuperSaver", "amount": 50}
             ],
-            "stocks": {"AAPL": "4000", "TSLA": "6969", "AMZN": "420"},
-            "averageTransfer": 50,
-            "numOfTransfers": 35,
+            "stocks": {"AAPL": 0, "TSLA": 0, "AMZN": 0},
+            "averageTransfer": 0,
+            "numOfTransfers": 0,
             "previousLocations": [
-                {"compound_code": "8QXC+9W Singapore", "latlng": "1.348429,103.772371"}
+                {"compound_code": getCountry(location)[1], "latlng": location}
             ],
         }
+
+        with open("SuperSecureUserData.json", "w+") as fp:
+            json.dump(userData, fp, indent=2)
 
         return jsonify("Success", 200)
 
