@@ -56,17 +56,15 @@ const HomePage = (props) => {
             <Button onClick={() => props.setPageToShow(3)}>Transfer</Button>
           </Grid>
           <Grid item md={4} sm={4} lg={4}>
-            <Button onClick={() => props.setPageToShow(4)}>Stocks</Button>
+            <Button disabled={true}>Stocks (Coming soon!)</Button>
           </Grid>
           <Grid item md={4} sm={4} lg={4}>
-            <Button onClick={() => props.setPageToShow(5)}>CREDIT CARD</Button>
+            <Button onClick={() => props.setPageToShow(4)}>CREDIT CARD</Button>
           </Grid>
         </Grid>
       </div>
     );
   }
-
-  
 
   function displayHistory() {
     return (

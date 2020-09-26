@@ -44,7 +44,6 @@ function Transfer(props) {
   }, []);
 
   function displayAccount(account) {
-    console.log(userData);
     return (
       <Grid item>
         <Paper
@@ -85,6 +84,54 @@ function Transfer(props) {
         {userData.accounts.map((account) => displayAccount(account))}
       </Grid>
     );
+  }
+
+  function makeTransfer() {
+    var hashedPassword = sha256(password, props.nonce);
+
+    var lat = "1.348429";
+    var lng = "103.772371";
+
+    navigator.geolocation.getCurrentPosition(
+      function (postition) {
+        lat = postition.coords.latitude;
+        lng = postition.coords.longitude;
+      },
+      function (error) {
+        console.log(error);
+      }
+    );
+
+    if (amount > 1.1 * userData.averageTransfer) {
+      toggle2FA(true);
+    } else {
+      var hashedPassword = sha256(password, props.nonce);
+      axios(
+        process.env.REACT_APP_BACKEND_IP +
+          "/easytransfer?username=" +
+          username +
+          "&password=" +
+          hashedPassword +
+          "&accountid=" +
+          account +
+          "&payee=" +
+          payee +
+          "&amount=" +
+          amount +
+          "&latlng=" +
+          lat +
+          "," +
+          lng
+      ).then((response) => {
+        if (response["data"] == "Success") {
+          window.location.reload(false);
+        } else if (response["data"] == "invalid location") {
+          alert("Please turn on location services on your device");
+        } else {
+          alert("error verifying 2FA");
+        }
+      });
+    }
   }
 
   function displayPayee() {
@@ -144,31 +191,7 @@ function Transfer(props) {
                 <Button
                   type="submit"
                   onClick={(event) => {
-                    if (amount > 1.1 * userData.averageTransfer) {
-                      toggle2FA(true);
-                    } else {
-                      var hashedPassword = sha256(password, props.nonce);
-                      axios(
-                        process.env.REACT_APP_BACKEND_IP +
-                        "/easytransfer?username=" +
-                        username +
-                        "&password=" +
-                        hashedPassword +
-                        "&accountid=" +
-                        account +
-                        "&payee=" +
-                        payee +
-                        "&amount=" +
-                        amount
-                      ).then((response) => {
-                        console.log(response);
-                        if (response["data"] == "Success") {
-                          window.location.reload(false);
-                        } else {
-                          alert("error verifying 2FA");
-                        };
-                      });
-                    }
+                    makeTransfer();
                   }}
                 >
                   Transfer
@@ -213,27 +236,8 @@ function Transfer(props) {
                     <Button
                       onClick={(event) => {
                         event.preventDefault();
-                        var hashedPassword = sha256(password, props.nonce);
-                        axios(
-                          process.env.REACT_APP_BACKEND_IP +
-                            "/transfer?username=" +
-                            username +
-                            "&password=" +
-                            hashedPassword +
-                            "&accountid=" +
-                            account +
-                            "&payee=" +
-                            payee +
-                            "&amount=" +
-                            amount
-                        ).then((response) => {
-                          console.log(response);
-                          if (response["data"] == "Success") {
-                            window.location.reload(false);
-                          } else {
-                            alert("error verifying 2FA");
-                          }
-                        });
+
+                        makeTransfer();
                       }}
                     >
                       submit

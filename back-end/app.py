@@ -89,6 +89,10 @@ def transfer():
     accountID = request.args.get("accountid", None)
     payee = request.args.get("payee", None)
     amount = request.args.get("amount", None)
+    latlng = request.args.get("latlng", None)
+    print(latlng)
+    if latlng == None or latlng.strip() == ",":
+        return "invalid location"
 
     db = json.load(open("SuperSecureDatabase.json", "r"))
     userData = json.load(open("SuperSecureUserData.json"))
@@ -96,6 +100,21 @@ def transfer():
     if db.get(username, None) == password:
         for account in userData[username]["accounts"]:
             if account["id"] == accountID:
+                lat = float(latlng.split(",")[0].strip())
+                lng = float(latlng.split(",")[1].strip())
+
+                previousLocations = userData[username]["previousLocations"][0]["latlng"]
+                prevLat = float(previousLocations.split(",")[0].strip())
+                prevLng = float(previousLocations.split(",")[1].strip())
+
+                if (
+                    lat + 2 > prevLat + 2
+                    or lat - 2 < prevLat - 2
+                    or lng + 2 > prevLng + 2
+                    or lng - 2 < prevLng - 2
+                ):
+                    return "invalid location"
+
                 if account["amount"] < int(amount):
                     return "insufficient cash"
                 account["amount"] -= int(amount)
@@ -116,19 +135,39 @@ def transfer():
     else:
         return "error"
 
+
 @app.route("/easytransfer", methods=["GET"])
 def easttransfer():
     username = request.args.get("username", None)
     accountID = request.args.get("accountid", None)
     payee = request.args.get("payee", None)
     amount = request.args.get("amount", None)
+    latlng = request.args.get("latlng", None)
+
+    if latlng == None or latlng.strip() == ",":
+        return "invalid location"
 
     db = json.load(open("SuperSecureDatabase.json", "r"))
     userData = json.load(open("SuperSecureUserData.json"))
 
-
     for account in userData[username]["accounts"]:
         if account["id"] == accountID:
+            lat = float(latlng.split(",")[0].strip())
+            lng = float(latlng.split(",")[1].strip())
+
+            previousLocations = userData[username]["previousLocations"][0]["latlng"]
+            prevLat = float(previousLocations.split(",")[0].strip())
+            prevLng = float(previousLocations.split(",")[1].strip())
+            print(lat + 2)
+            print(prevLat)
+            if (
+                lat + 2 > prevLat + 2
+                or lat - 2 < prevLat - 2
+                or lng + 2 > prevLng + 2
+                or lng - 2 < prevLng - 2
+            ):
+                return "invalid location"
+
             if account["amount"] < int(amount):
                 return "insufficient cash"
             account["amount"] -= int(amount)
@@ -147,6 +186,97 @@ def easttransfer():
 
             return "Success"
 
+
+@app.route("/createModel", methods=["GET"])
+def createModel():
+    name = request.args.get("username", None)
+    if name == None:
+        return -1
+    data = json.load(open("SuperSecureCreditCardTransactions.json"))
+    records = data[name].get("records", [])
+    if records == []:
+        return -1
+
+    model = {}
+    totalRecords = 0
+    totalAmount = 0
+    for line in records:
+        if "*" in line[1]:
+            name = line[1].split("*")[0]
+        elif " " in line[1]:
+            name = line[1].split(" ")[0]
+        else:
+            name = line[1]
+
+        if model.get(name, None) == None:
+            model[name] = {"totalAmount": 0, "totalTransactions": 0}
+
+        model[name]["totalAmount"] += line[2]
+        model[name]["totalTransactions"] += 1
+
+        totalRecords += 1
+        totalAmount += line[2]
+
+    model["total"] = {"totalAmount": totalAmount, "totalTransactions": totalRecords}
+
+    result = {"admin": {"records": records, "model": model}}
+    with open("SuperSecureCreditCardTransactions.json", "w+") as fp:
+        json.dump(result, fp, indent=2)
+
+    return ("Success")
+
+@app.route("/findSussRecords", methods=["GET"])
+def findSuspiciousRecords():
+    name = request.args.get("username", None)
+
+    if name == None:
+        return jsonify([])
+
+    data = json.load(open("SuperSecureCreditCardTransactions.json"))
+    if data.get(name, None) == None:
+        return jsonify([])
+    records = data[name].get("records", [])
+    model = data[name].get("model", [])
+
+    if records == [] or model == []:
+        return jsonify([])
+
+    global_average = (
+        model.get("total", {"totalAmount": 0})["totalAmount"]
+        / model.get("total", {"totalTransactions": 1})["totalTransactions"]
+    )
+
+    suspicious = []
+    for record in records:
+        if "*" in record[1]:
+            name = record[1].split("*")[0]
+        elif " " in record[1]:
+            name = record[1].split(" ")[0]
+        else:
+            name = record[1]
+
+        local_average = (
+            model.get(name, {"totalAmount": 0})["totalAmount"]
+            / model.get(name, {"totalTransactions": 1})["totalTransactions"]
+        )
+
+        if record[2] > local_average * 1.5 or record[2] > global_average * 10:
+            suspicious.append(record)
+
+    return jsonify(suspicious)
+
+@app.route("/getCreditCardRecords", methods=["GET"])
+def getCreditCardRecords():
+    username = request.args.get("username", None)
+    if username == None:
+        return "invlaid username"
+    
+    data = json.load(open("SuperSecureCreditCardTransactions.json"))
+    if data.get(username, None) == None:
+        return jsonify([])
+    records = data[username].get("records", [])
+
+    return jsonify(records)
 
 
 def getCountry(latlng=""):

@@ -10,6 +10,7 @@ import LoginPage from "./components/LoginPage";
 import Transfer from "./components/Transfer";
 import axios from "axios";
 import { useCookies } from "react-cookie";
+import CreditCard from "./components/CreditCard";
 
 function App() {
   const [authenticated, setAthenticated] = useState(false);
@@ -41,11 +42,9 @@ function App() {
         return <Transfer setPageToShow={setPageToShow} nonce={values.nonce} />;
 
       case 4:
+        return <CreditCard setPageToShow={setPageToShow} nonce={values.nonce} />;
         break;
-
-      case 5:
-        break;
-
+      
       default:
         break;
     }

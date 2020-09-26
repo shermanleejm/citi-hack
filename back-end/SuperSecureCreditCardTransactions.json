@@ -1,0 +1,235 @@
+{
+  "admin": {
+    "records": [
+      [
+        "14-Aug-20",
+        "GRAB*ADR-8316829-9-385 SINGAPORE SG",
+        13.7
+      ],
+      [
+        "15-Aug-20",
+        "BUS/MRT 41641101 SINGAPORE SG",
+        0.92
+      ],
+      [
+        "16-Aug-20",
+        "MCDONALD'S (BWC) SINGAPORE SG",
+        21.25
+      ],
+      [
+        "17-Aug-20",
+        "GRAB*ADR-8316829-9-386 SINGAPORE SG",
+        14.9
+      ],
+      [
+        "19-Aug-20",
+        "BUS/MRT 42033042 SINGAPORE SG",
+        1.84
+      ],
+      [
+        "20-Aug-20",
+        "BUS/MRT 42131950 SINGAPORE SG",
+        3.96
+      ],
+      [
+        "21-Aug-20",
+        "BUS/MRT 42251984 SINGAPORE SG",
+        2.4
+      ],
+      [
+        "21-Aug-20",
+        "GRAB*ADR-8316829-9-387 SINGAPORE SG",
+        7.0
+      ],
+      [
+        "23-Aug-20",
+        "CATHAY CINEPLEXES PTE SINGAPORE SG",
+        26.5
+      ],
+      [
+        "23-Aug-20",
+        "GOJEK",
+        7.9
+      ],
+      [
+        "24-Aug-20",
+        "GRAB*ADR-8316829-9-388 SINGAPORE SG",
+        13.7
+      ],
+      [
+        "26-Aug-20",
+        "GRAB*ADR-8316829-9-390 SINGAPORE SG",
+        7.0
+      ],
+      [
+        "28-Aug-20",
+        "GOJEK",
+        12.3
+      ],
+      [
+        "28-Aug-20",
+        "HAI DI LAO-IMM SINGAPORE SG",
+        101.2
+      ],
+      [
+        "29-Aug-20",
+        "GRAB*ADR-8316829-9-392 SINGAPORE SG",
+        21.85
+      ],
+      [
+        "31-Aug-20",
+        "BUS/MRT 43310257 SINGAPORE SG",
+        2.48
+      ],
+      [
+        "1-Sep-20",
+        "BUS/MRT 43382320 SINGAPORE SG",
+        2.66
+      ],
+      [
+        "4-Sep-20",
+        "MEATSMITH SINGAPORE SG",
+        51.4
+      ],
+      [
+        "5-Sep-20",
+        "GRAB*GRAB* DR-8316829- SINGAPORE SG",
+        14.9
+      ],
+      [
+        "6-Sep-20",
+        "GRAB*GRAB* DR-8316829- SINGAPORE SG",
+        10.0
+      ],
+      [
+        "6-Sep-20",
+        "GRAB*GRAB* DR-8316829- SINGAPORE SG",
+        12.0
+      ],
+      [
+        "6-Sep-20",
+        "GRAB*GRAB* DR-8316829- SINGAPORE SG",
+        8.0
+      ],
+      [
+        "7-Sep-20",
+        "BUS/MRT 44071209 SINGAPORE SG",
+        1.64
+      ],
+      [
+        "7-Sep-20",
+        "YAKUN SMU SINGAPORE SG",
+        3.15
+      ],
+      [
+        "7-Sep-20",
+        "GOOGLE*SQUARE ENIX SINGAPORE SG",
+        6.84
+      ],
+      [
+        "9-Sep-20",
+        "APPLE.COM/BILL CORK IE",
+        4.02
+      ],
+      [
+        "9-Sep-20",
+        "BUS/MRT 44292509 SINGAPORE SG",
+        1.64
+      ],
+      [
+        "10-Sep-20",
+        "GOOGLE*GOOGLE STORAGE SINGAPORE SG",
+        2.79
+      ],
+      [
+        "10-Sep-20",
+        "GOOGLE*SQUARE ENIX SINGAPORE SG",
+        17.98
+      ],
+      [
+        "11-Sep-20",
+        "SUBWAY @ SMU-MM SINGAPORE SG",
+        5.95
+      ],
+      [
+        "11-Sep-20",
+        "GOOGLE*SQUARE ENIX SINGAPORE SG",
+        10.98
+      ],
+      [
+        "12-Sep-20",
+        "GOJEK",
+        19.5
+      ],
+      [
+        "13-Sep-20",
+        "GRAB*GRAB* DR-8316829- SINGAPORE SG",
+        7.0
+      ],
+      [
+        "14-Sep-20",
+        "GRAB*GRAB* DR-8316829- SINGAPORE SG",
+        19.2
+      ],
+      [
+        "14-Sep-20",
+        "LAZADA SINGAPORE SINGAPORE SG",
+        72.9
+      ]
+    ],
+    "model": {
+      "GRAB": {
+        "totalAmount": 149.25,
+        "totalTransactions": 12
+      },
+      "BUS/MRT": {
+        "totalAmount": 17.540000000000003,
+        "totalTransactions": 8
+      },
+      "MCDONALD'S": {
+        "totalAmount": 21.25,
+        "totalTransactions": 1
+      },
+      "CATHAY": {
+        "totalAmount": 26.5,
+        "totalTransactions": 1
+      },
+      "GOJEK": {
+        "totalAmount": 39.7,
+        "totalTransactions": 3
+      },
+      "HAI": {
+        "totalAmount": 101.2,
+        "totalTransactions": 1
+      },
+      "MEATSMITH": {
+        "totalAmount": 51.4,
+        "totalTransactions": 1
+      },
+      "YAKUN": {
+        "totalAmount": 3.15,
+        "totalTransactions": 1
+      },
+      "GOOGLE": {
+        "totalAmount": 38.59,
+        "totalTransactions": 4
+      },
+      "APPLE.COM/BILL": {
+        "totalAmount": 4.02,
+        "totalTransactions": 1
+      },
+      "SUBWAY": {
+        "totalAmount": 5.95,
+        "totalTransactions": 1
+      },
+      "LAZADA": {
+        "totalAmount": 72.9,
+        "totalTransactions": 1
+      },
+      "total": {
+        "totalAmount": 531.4499999999999,
+        "totalTransactions": 35
+      }
+    }
+  }
+}
